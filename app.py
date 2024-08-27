@@ -7,7 +7,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, mean_squared_error, confusion_matrix
-from tensorflow.keras.models import Sequential,load_model
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
 # Load your dataset
@@ -48,7 +48,20 @@ X_transformed = preprocessor.fit_transform(X)
 
 # Split the data into training and test sets
 X_train, X_test, y_train, y_test = train_test_split(X_transformed, y, test_size=0.2, random_state=42)
-model=load_model('deep_neural_network_model.h5')
+
+# Build the model
+model = Sequential()
+model.add(Dense(64, input_dim=X_train.shape[1], activation='relu'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(16, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+# Compile the model
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+# Train the model
+history = model.fit(X_train, y_train, epochs=20, batch_size=32, validation_split=0.1, verbose=1)
+model.save('dnn.h5')
 
 # Evaluate the model
 y_pred_prob = model.predict(X_test)
