@@ -11,7 +11,7 @@ from tensorflow.keras.models import Sequential,load_model
 from tensorflow.keras.layers import Dense
 
 # Load your dataset
-df = pd.read_csv('.\csv_result-bone+marrow+transplant+children.csv')  # Adjust file path if needed
+df = pd.read_csv('csv_result-bone+marrow+transplant+children.csv')  # Adjust file path if needed
 
 # Define important features and target
 important_features = ['survival_time', 'extcGvHD', 'Relapse', 'CD34kgx10d6',
